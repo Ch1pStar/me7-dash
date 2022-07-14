@@ -1,47 +1,20 @@
-const csv = require('csv-parser')
 const fs = require('fs')
-const results = [];
 
+const logfilePath = 'test-logs/4.csv';
+let logData = '';
+const sampleRate = 1000/20; // 20 samples per second or 50ms between samples
 
-const headerCommentLen = 19;
+fs.createReadStream(logfilePath)
+.on('data', (data) => logData+=data.toString())
+.on('end', simulateRealtimeLog);
 
-// Object.values(results[headerCommentLen]);
-let varNames;
-let unitNames ;
-let varDesc ;
+async function simulateRealtimeLog() {
+  logData = logData.split('\r\n');
 
-let rpmIndex = -1;
-let wTempIndex = -1;
-let voltageIndex = -1;
-let rowCounter = 0;
+  for(let i=0;i<logData.length;i++) {
+    const data = logData[i];
 
-
-fs.createReadStream('test-logs/3.csv')
-  .pipe(csv({
-    skipComments: true,
-  }))
-  .on('data', (data) => {
-    data = Object.values(data);
-    
-    console.log(data)
-
-    if(rowCounter == headerCommentLen) varNames = data.map((n)=>n.trim());
-    if(rowCounter == headerCommentLen+1) unitNames = data.map((n)=>n.trim());;
-    if(rowCounter == headerCommentLen+2) varDesc = data.map((n)=>n.trim());;
-
-    rowCounter++;
-    if(rowCounter < headerCommentLen) return;
-
-    if(!rpmIndex) rpmIndex = varNames.indexOf('nmot');
-    if(!wTempIndex) wTempIndex = varNames.indexOf('tmot');
-    if(!voltageIndex) voltageIndex = varNames.indexOf('uv');
-
-    const parsed = [data[rpmIndex]];
-
-      console.log(data)
-  })
-  .on('end', () => {
-
-    console.log(varNames.indexOf('nmot'))
-
-  });
+    console.log(data);
+    await new Promise((res)=>setTimeout(res, sampleRate));
+  }
+}
