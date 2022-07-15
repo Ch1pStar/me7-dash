@@ -9,6 +9,8 @@ module.exports = class CSVParser {
 		this.wTempIndex = -1;
 		this.voltageIndex = -1;
 		this.boostIndex = -1;
+		this.accelPedalPosIndex = -1;
+
 		this.rowCounter = 0;
 
 		this.lastTimestamp = 0;
@@ -31,13 +33,15 @@ module.exports = class CSVParser {
 	  if(this.wTempIndex < 0) this.wTempIndex = this.varNames.indexOf('tmot');
 	  if(this.voltageIndex < 0) this.voltageIndex = this.varNames.indexOf('ub');
 	  if(this.boostIndex < 0) this.boostIndex = this.varNames.indexOf('pvdks_w');
+	  if(this.accelPedalPosIndex < 0) this.accelPedalPosIndex = this.varNames.indexOf('wped');
 
-	  const parsed = new Float32Array(4);
+	  const parsed = new Float32Array(5);
 
 	  parsed[0] = data[this.boostIndex];
 	  parsed[1] = data[this.rpmIndex];
 	  parsed[2] = data[this.wTempIndex];
 	  parsed[3] = data[this.voltageIndex];
+	  parsed[4] = data[this.accelPedalPosIndex];
 
 	  const oldTimestamp = this.lastTimestamp;
 	  this.lastTimestamp = process.hrtime.bigint();

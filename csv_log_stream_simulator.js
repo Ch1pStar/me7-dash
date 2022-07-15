@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const logfilePath = 'test-logs/3.csv';
+const logfilePath = 'test-logs/4.csv';
 let logData = '';
 const sampleRate = 1000/20; // 20 samples per second or 50ms between samples
 
