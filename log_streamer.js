@@ -1,6 +1,6 @@
 const { WebSocketServer } = require('ws');
 const csv = require('csv-parser');
-const { spawn } = require('node:child_process');
+const { spawn } = require('child_process');
 const CSVParser = require('./CSVParser');
 
 const wss = new WebSocketServer({ port: 8085 });
@@ -16,9 +16,10 @@ startLog();
 function startLog() {
   const csvParser = new CSVParser();
   const isRealtime = process.argv.includes('--realtime')
+  const cwd = process.platform == 'win32' ? './me7logger/me7logger/' : './me7logger/me7logger_linux/'
   const ls = isRealtime ?
-    spawn('./bin/ME7Logger.exe', ['-R', '-h', 'configs/dash_log.cfg'], {cwd: './me7logger/me7logger/'}) :
-    spawn('node.exe', ['csv_log_stream_simulator.js']);
+    spawn('./bin/ME7Logger', ['-R', '-h', 'ecus/dash_log.cfg'], {cwd}) :
+    spawn('node', ['csv_log_stream_simulator.js']);
 
   ls.stdout
   .pipe(csv())
