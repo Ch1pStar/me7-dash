@@ -1,0 +1,14 @@
+[Configuration]
+ECUCharacteristics = 8N0906018BP.ecu
+SamplesPerSecond = 20
+
+[LogVariables]
+;Name            [Alias]                             [; Comment]
+lbz             ;BatteryChargeBalance                 ; Ladebilanz der Batterie
+nmot            ;EngineSpeed                          ; Motordrehzahl
+nmotll          ;EngineIdlingSpeed                    ; Motordrehzahl im Leerlaufbereich
+tmot            ;CoolantTemperature                   ; Motor-Temperatur
+tmotlin         ;CoolantTemperature                   ; Motortemperatur
+ub              ;BatteryVoltage                       ; Batteriespannung
+wped            ;AccelPedalPosition                   ; Normierter Fahrpedalwinkel
+wub             ;BatteryVoltage                       ; Batteriespannung; vom AD-Wandler erfaßter Wert

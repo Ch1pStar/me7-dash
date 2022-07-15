@@ -1,0 +1,20 @@
+[Configuration]
+ECUCharacteristics = 8N0906018BP.ecu
+SamplesPerSecond = 20
+
+[LogVariables]
+;Name            [Alias]                             [; Comment]
+fr_w            ;LambdaControl                        ; Lambda-Regler-Ausgang (Word)
+lamfa_w         ;TargetAFRDriverRequest               ; Lambdasoll Fahrerwunsch (word)
+lamsbg_w        ;AirFuelRatioDesired                  ; Lambdasoll Begrenzung (word)
+lamsoni_w       ;AirFuelRatioCurrent                  ; Lambda-Istwert
+nmot            ;EngineSpeed                          ; Motordrehzahl
+nmot_w          ;EngineSpeed                          ; Motordrehzahl
+plsol           ;BoostPressureDesired                 ; Soll-Ladedruck
+pvdks_w         ;BoostPressureActual                  ; Druck vor Drosselklappe ohne Umschaltung auf Ersatzwert bei Sensorfehler
+tmot            ;CoolantTemperature                   ; Motor-Temperatur
+ub              ;BatteryVoltage                       ; Batteriespannung
+wped            ;AccelPedalPosition                   ; Normierter Fahrpedalwinkel
+B_lambts        ;CondLambdaPartProtectionActive       ; Lambda für Bauteileschutz ist aktiv
+B_ldob          ;CondOverboostActive                  ; Bedingung: Overboost aktiv
+B_ldobsp        ;CondOverboostDuringBlockPeriod       ; Bedingung LDR Overboost innerhalb Sperrzeit

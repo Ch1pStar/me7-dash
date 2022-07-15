@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VisualME7LoggerSettings CurrentProfile="Default Profile">
+  <Profiles>
+    <Profile Name="Default Profile" ECUFile="C:\me7logger\me7logger\ecus\8N0906018BP.ecu" ConfigFile="">
+      <Options WriteLogRealTime="false" TimeSync="false" WriteAbsoluteTimestamp="false" ReadSingleMeasurement="false" WriteOutputFile="false" DisableRealTimeOutput="false" TailLogFileWithVME7L="false">
+        <Communication Type="LogFile" COMPort="COM2" FTDIInfo="">
+          <BaudRate Override="false">56000</BaudRate>
+        </Communication>
+        <SampleRate Override="false">20</SampleRate>
+        <LogFile WriteToFile="true" UseDefaultLogFile="true">C:\me7logger\me7logger\logs\test_20220712_145137.csv</LogFile>
+      </Options>
+      <ChecksumInfo ApplicationPath="C:\me7logger\ME7Check.exe" BinPath="" />
+      <EEProm ApplicationPath="C:\me7logger\ME7_95040.exe" BinPath="" COMPort="1" Baudrate="" />
+      <DisplayOptions RefreshInterval="35" GraphVRes="1000" GraphHRes="1200" DisplayOrder="Default">
+        <Expressions />
+        <GraphVariables>
+          <GraphVariable Active="true" Variable="lamsbg_w" Name="AirFuelRatioDesired" Min="0" Max="100" LineColor="-65536" LineThickness="1" LineStyle="5" ShowAxis="false" />
+          <GraphVariable Active="true" Variable="nmot" Name="EngineSpeed" Min="0" Max="6000.00" LineColor="-8323328" LineThickness="1" LineStyle="5" ShowAxis="false" />
+        </GraphVariables>
+      </DisplayOptions>
+    </Profile>
+  </Profiles>
+</VisualME7LoggerSettings>
