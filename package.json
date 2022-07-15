@@ -16,6 +16,8 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server --open --mode=development"
+    "start": "webpack-dev-server --open --mode=development",
+    "log_simulate" : "node log_streamer.js",
+    "log_realtime" : "node log_streamer.js --realtime"
   }
 }
