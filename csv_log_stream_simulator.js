@@ -1,4 +1,5 @@
 const fs = require('fs')
+const {EOL} = require('os');
 
 const logfilePath = 'test-logs/4.csv';
 let logData = '';
@@ -9,7 +10,7 @@ fs.createReadStream(logfilePath)
 .on('end', simulateRealtimeLog);
 
 async function simulateRealtimeLog() {
-  logData = logData.split('\r\n');
+  logData = logData.split(EOL);
 
   for(let i=0;i<logData.length;i++) {
     const data = logData[i];
