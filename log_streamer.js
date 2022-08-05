@@ -14,8 +14,8 @@ wss.on('connection', function connection(ws) {
 startLog();
 
 function startLog() {
-  const csvParser = new CSVParser();
-  const isRealtime = process.argv.includes('--realtime')
+  const isRealtime = process.argv.includes('--realtime');
+  const csvParser = new CSVParser(isRealtime ? '-> Start logging' : 'Log started at');
   const cwd = process.platform == 'win32' ? './me7logger/me7logger/' : './me7logger/me7logger_linux/'
   const ls = isRealtime ?
     spawn('./bin/ME7Logger', ['-R', '-h', 'ecus/dash_log.cfg'], {cwd}) :

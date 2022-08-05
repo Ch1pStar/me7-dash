@@ -1,0 +1,67 @@
+-> Reading log config file ecus/dash_log.cfg .... done
+-> Reading ecu characteristics file C:\Projects\me7-dash\me7logger\me7logger\ecus\8N0906018BP.ecu .... done
+Used Ecu definition is:
+[Communication]
+Connect      = SLOW-0x11
+Communicate  = HM2-0x10
+LogSpeed     = 56000
+
+[Identification]
+HWNumber           = "0261208054"
+SWNumber           = "1037366474"
+PartNumber         = "8N0906018BP"
+SWVersion          = "0002"
+EngineId           = "1.8L R4/5VT"
+
+Logged variables are:
+#no.: name                , alias                           , addr  ,sz, bitm, S, I,  A         ,   B, unit
+#------------------------------------------------------------------------------------------------------------
+#001: fr_w                , LambdaControl                   , 38281E, 2, 0000, 0, 0, 3.05176e-005,   0, '-'
+#002: lambts_w            , LambdaPartProtection            , 384AFE, 2, 0000, 0, 0, 0.000244141,   0, '-'
+#003: lamsoni_w           , AirFuelRatioCurrent             , 381B2C, 2, 0000, 0, 0, 0.000244141,   0, '-'
+#004: lbz                 , BatteryChargeBalance            , 384851, 1, 0000, 0, 0,    0.390625,   0, '%'
+#005: mshfm_w             , MassAirFlow                     , 00F9A4, 2, 0000, 0, 0,   0.0277778,   0, 'g/s'
+#006: nmot                , EngineSpeed                     , 00F89A, 1, 0000, 0, 0,          40,   0, 'rpm'
+#007: plsol               , BoostPressureDesired            , 3809F6, 1, 0000, 0, 0,          10,   0, 'mbar'
+#008: tans                , IntakeAirTemperature            , 380A31, 1, 0000, 0, 0,        0.75,  48, '▒C'
+#009: tats_w              , EGTSensor                       , 384B12, 2, 0000, 0, 0,   0.0195312,  50, '▒C'
+#010: tmot                , CoolantTemperature              , 380A32, 1, 0000, 0, 0,        0.75,  48, '▒C'
+#011: ub                  , BatteryVoltage                  , 380991, 1, 0000, 0, 0,      0.0704,   0, 'V'
+#012: vfzg                , VehicleSpeed                    , 384854, 1, 0000, 0, 0,        1.25,   0, 'km/h'
+#013: wnwi_w              , CamshaftAngle                   , 384994, 2, 0000, 1, 0,  0.00390625,   0, '▒KW'
+#014: wped                , AccelPedalPosition              , 38099D, 1, 0000, 0, 0,    0.392157,   0, '% PED'
+Logged data size is 20 bytes.
+Really logged are 13 entries with 20 bytes.
+Start connecting to ECU at 16.07.2022 10:12:49.269
+try connect slow(11)
+=> FLASH (slowinit)
+ecuid reports software version
+Started session86, speed=56000
+-> Read ECU ID's .... done
+-> Checked ECU ID's
+Found bootrom version 05.12/05.32 via readmem
+Read pointer ... done
+Store handler ... done
+Verify handler ... done
+Redirect pointer ... done
+Test handler ... done
+-> Start logging (logdata size=20, 20 samples/second, 56000 baud) at 16.07.2022 10:12:52.609
+"TIME","LambdaControl","LambdaPartProtection","AirFuelRatioCurrent","BatteryChargeBalance","MassAirFlow","EngineSpeed","BoostPressureDesired","IntakeAirTemperature","EGTSensor","CoolantTemperature","BatteryVoltage","VehicleSpeed","CamshaftAngle","AccelPedalPosition"
+Press ^C to stop logging
+    0.000, 1         , 1         , 0.998537  , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8832   , 0         , 0         , 0       
+    0.050, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8832   , 0         , 0         , 0       
+    0.100, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8832   , 0         , 0         , 0       
+    0.150, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8128   , 0         , 0         , 0       
+    0.200, 1         , 1         , 1.00195   , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8128   , 0         , 0         , 0       
+    0.250, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8128   , 0         , 0         , 0       
+    0.300, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8128   , 0         , 0         , 0       
+    0.350, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8832   , 0         , 0         , 0       
+    0.400, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8832   , 0         , 0         , 0       
+    0.450, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8128   , 0         , 0         , 0       
+    0.500, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8128   , 0         , 0         , 0       
+    0.550, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8832   , 0         , 0         , 0       
+    0.600, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8832   , 0         , 0         , 0       
+    0.650, 1         , 1         , 1.00195   , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8832   , 0         , 0         , 0       
+    0.700, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8128   , 0         , 0         , 0       
+    0.750, 1         , 1         , 1         , 0         , 0         , 0         , 940       , 21.75     , 1110      , 20.25     , 12.8128   , 0         , 0         , 0       
+
