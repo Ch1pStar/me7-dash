@@ -1,6 +1,6 @@
 module.exports = class CSVParser {
 	constructor() {
-		this.headerCommentLen = 20;
+		this.headerCommentLen = 46;
 		this.varNames;
 		this.unitNames;
 		this.varDesc;
@@ -19,21 +19,29 @@ module.exports = class CSVParser {
 	parseRow(data) {
 	  data = Object.values(data).map(v=>v.trim());
 
+
 	  if(this.rowCounter == this.headerCommentLen) this.varNames = data;
 	  if(this.rowCounter == this.headerCommentLen+1) this.unitNames = data;;
 	  if(this.rowCounter == this.headerCommentLen+2) this.varDesc = data;;
 
 	  this.rowCounter++;
 	  if(this.rowCounter < this.headerCommentLen) return;
-	  if(!this.varNames) return;
+	  if(!this.varNames || !this.unitNames) return;
 
 	  data = data.map(v=>parseFloat(v));
 
-	  if(this.rpmIndex < 0) this.rpmIndex = this.varNames.indexOf('nmot');
-	  if(this.wTempIndex < 0) this.wTempIndex = this.varNames.indexOf('tmot');
-	  if(this.voltageIndex < 0) this.voltageIndex = this.varNames.indexOf('ub');
-	  if(this.boostIndex < 0) this.boostIndex = this.varNames.indexOf('pvdks_w');
-	  if(this.accelPedalPosIndex < 0) this.accelPedalPosIndex = this.varNames.indexOf('wped');
+	  // console.log(this.rowCounter, this.unitNames); return;
+	  // if(this.rpmIndex < 0) this.rpmIndex = this.varNames.indexOf('nmot');
+	  // if(this.wTempIndex < 0) this.wTempIndex = this.varNames.indexOf('tmot');
+	  // if(this.voltageIndex < 0) this.voltageIndex = this.varNames.indexOf('ub');
+	  // if(this.boostIndex < 0) this.boostIndex = this.varNames.indexOf('pvdks_w');
+	  // if(this.accelPedalPosIndex < 0) this.accelPedalPosIndex = this.varNames.indexOf('wped');
+
+	  if(this.rpmIndex < 0) this.rpmIndex = this.unitNames.indexOf('EngineSpeed');
+	  if(this.wTempIndex < 0) this.wTempIndex = this.unitNames.indexOf('CoolantTemperature');
+	  if(this.voltageIndex < 0) this.voltageIndex = this.unitNames.indexOf('BatteryVoltage');
+	  if(this.boostIndex < 0) this.boostIndex = this.unitNames.indexOf('BoostPressureDesired');
+	  if(this.accelPedalPosIndex < 0) this.accelPedalPosIndex = this.unitNames.indexOf('AccelPedalPosition');
 
 	  const parsed = new Float32Array(5);
 
