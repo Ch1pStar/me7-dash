@@ -1,1 +1,1 @@
-# me7-dash
+# Digital Car Dashboard Frontend for ME7 family Bosch ECUs - Linux(ARM/x86) and Windows support
