@@ -13,7 +13,7 @@ export default class SpeedGauge extends Container {
 		const bg = Sprite.from('ui/speed_bg');
 		const kmph = Sprite.from('ui/kmph');
 		const text = new PIXI.Text(this.value,{
-			fontFamily: 'lcd_time',
+			fontFamily: 'LCD AT&T Phone Time/Date',
 			fontSize: 91,
 			fill: 0xFDFED5,
 			letterSpacing: 12,

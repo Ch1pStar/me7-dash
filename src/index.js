@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import DashApp from './main';
+import DashApp from './DashApp';
 import {getDashSize} from './utils/math';
 
 window.PIXI = PIXI;

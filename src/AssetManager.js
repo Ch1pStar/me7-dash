@@ -2,7 +2,8 @@ import { Loader } from 'pixi.js';
 
 const IMG_EXTENSIONS = ['jpeg', 'jpg', 'png'];
 const SOUND_EXTENSIONS = ['wav', 'ogg', 'm4a'];
-const context = require.context('./assets', true, /\.(jpg|png|wav|ttf|woff)$/im);
+const SHAPE_EXTENSIONS = ['shapes']; //TODO
+const context = require.context('./assets', true, /\.(jpg|png|wav|ttf|woff|shapes\.json)$/im);
 
 class AssetManager {
   constructor() {
@@ -11,6 +12,7 @@ class AssetManager {
     this._assets = {};
     this._sounds = {};
     this._images = {};
+    this._shapes = {};
 
     this._importAssets();
   }
@@ -20,6 +22,13 @@ class AssetManager {
    */
   get images() {
     return this._images;
+  }
+
+  /**
+   * Manifest of all available shapes
+   */
+  get shapes() {
+    return this._shapes;
   }
 
   /**
@@ -59,14 +68,27 @@ class AssetManager {
       const url = context(filename);
 
       id = id.substring(1);
+
       this._assets[id] = url;
 
+      const fileName = id.match(/\/([\S\s]+)$/)[1];
+
       if (IMG_EXTENSIONS.indexOf(ext) > -1) {
+
         this._images[id] = url;
+        // a little hack to help with adobe animate exports where assets cant have folders
+        // add reference to the texture by filename only(without the full folder path)
+        this._images[fileName] = url;
       }
 
       if (SOUND_EXTENSIONS.indexOf(ext) > -1) {
         this._sounds[id] = url;
+      }
+
+
+      if (SHAPE_EXTENSIONS.indexOf(ext) > -1) {
+        this._shapes[id] = url;
+        this._shapes[fileName] = url;
       }
     });
   }

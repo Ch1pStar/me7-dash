@@ -2,6 +2,7 @@ import { Application, Container, Sprite, Texture } from 'pixi.js';
 import Assets from './AssetManager';
 import DigiFizUI from './DigiFizUI';
 import {getDashSize} from './utils/math';
+import dashAnim from './assets/animations/dash';
 
 export default class DashApp extends Application {
 
@@ -9,12 +10,13 @@ export default class DashApp extends Application {
 		super(options);
 
 		Assets.loadImages()
+		.then(()=>dashAnim.shapes = Assets.shapes)
 		.then((loader)=>this._initUI())
 		.then(()=>this._connectToLogServer())
 	}
 
 	_initUI() {
-		const ui = new DigiFizUI;
+		const ui = new DigiFizUI(dashAnim);
 
 		ui.scale.set(getDashSize().scale);
 		this.ui = ui;

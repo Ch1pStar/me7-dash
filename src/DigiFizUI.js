@@ -1,75 +1,80 @@
 import { Container, Sprite } from 'pixi.js';
+import * as animate from '@pixi/animate';
 
-import { lerp } from './utils/math';
+import { lerp, scaleNumber } from './utils/math';
+import dashAnim from './assets/animations/dash';
 import HorizontalGauge from './UIComponents/HorizontalGauge';
 import SpeedGauge from './UIComponents/SpeedGauge';
 import RPMGauge from './UIComponents/RPMGauge';
 
+import Config from './config';
+
+
 export default class DigiFizUI extends Container {
-  constructor() {
+  constructor(anim) {
     super();
+
+    anim.setup(animate);
+    this._anim = new anim.lib.dash;
 
     this._initUI();
   }
 
   updateData([boost,rpm,waterTemp,voltage, accelPedalPos], delta) {
 
-    this.rpmGauge.value = lerp(this.rpmGauge.value, rpm, delta);
-    this.speedGauge.value = lerp(this.rpmGauge.value, rpm, delta)/10;
-    this.waterTempGauge.value = waterTemp;
-    this.voltageGauge.value = voltage;
-    this.boostGauge.value = boost;
-    this.accelPedalPosGauge.value = accelPedalPos;
+    this._currentRpmNormalized = lerp(this._currentRpmNormalized, rpm, delta)/100|0;
+
+    this.throttleGauge.gotoAndStop(this._getNormalizedVal(accelPedalPos, 'throttle'));
+    this.boostGauge.gotoAndStop(this._getNormalizedVal(boost, 'boost'));
+    this.waterGauge.gotoAndStop(this._getNormalizedVal(waterTemp, 'water'));
+    this.voltageGauge.gotoAndStop(this._getNormalizedVal(voltage, 'voltage'));
+    this.rpmGauge.gotoAndStop(this._currentRpmNormalized);
+
+    // tmp until we can log speed via GPS or from gearbox
+    this.speedo.text = this._currentRpmNormalized*10;
   }
 
   _initUI() {
-    const bg = Sprite.from('ui/dash_bg');
-    const logo = Sprite.from('ui/dash_logo');
-    const rpmGauge = new RPMGauge();
-    const speedGauge = new SpeedGauge();
-    const waterTempGauge = new HorizontalGauge({
-      icon: 'ui/water_temp_icon',
-      name: 'Water Temperature Gauge',
-      min: 30,
-      max: 120,
-    });
+    this._currentRpmNormalized = 0;
+    this.rpmGauge.gotoAndStop(this._currentRpmNormalized);
+    this.waterGauge.gotoAndStop(0);
+    this.voltageGauge.gotoAndStop(0);
+    this.boostGauge.gotoAndStop(0);
+    this.throttleGauge.gotoAndStop(0);
 
-    const voltageGauge = new HorizontalGauge({
-      icon: 'ui/battery_icon',
-      name: 'Battery Voltage Gauge',
-      min: 0,
-      max: 18,
-    });
+    // cant set this in animate :/
+    this.speedo.style.padding = 8;
 
-    const boostGauge = new HorizontalGauge({
-      icon: 'ui/turbo_icon',
-      name: 'Boost Gauge',
-      min: 0,
-      max: 3000,
-    });
+    this.addChild(this._anim);
+  }
 
-    const accelPedalPosGauge = new HorizontalGauge({
-      icon: 'ui/accel_pedal_icon',
-      name: 'Acceleration Pedal Postion Gauge',
-      min: 0,
-      max: 100,
-    });
+  _getNormalizedVal(val, name) {
+    const {min, max} = Config.gauges[name];
 
-    rpmGauge.position.set(65, 10);
-    speedGauge.position.set(326, 88);
-    logo.position.set(15, 10);
-    waterTempGauge.position.set(700, 40);
-    voltageGauge.position.set(665, 40);
-    boostGauge.position.set(630, 40);
-    accelPedalPosGauge.position.set(595, 40);
+    return scaleNumber(val, min, max, 0,100)|0;
+  }
 
-    this.addChild(bg, logo, rpmGauge, speedGauge, voltageGauge, waterTempGauge, boostGauge, accelPedalPosGauge);
+  get speedo() {
+    return this._anim.speedo.speedoVal;
+  }
 
-    this.voltageGauge = voltageGauge;
-    this.boostGauge = boostGauge;
-    this.accelPedalPosGauge = accelPedalPosGauge;
-    this.waterTempGauge = waterTempGauge;
-    this.rpmGauge = rpmGauge;
-    this.speedGauge = speedGauge;
+  get rpmGauge() {
+    return this._anim.rpmGauge;
+  }
+
+  get throttleGauge() {
+    return this._anim.throttleGauge.progress;
+  }
+
+  get boostGauge() {
+    return this._anim.boostGauge.progress;
+  }
+
+  get waterGauge() {
+    return this._anim.waterTempGauge.progress;
+  }
+
+  get voltageGauge() {
+    return this._anim.voltageGauge.progress;
   }
 }

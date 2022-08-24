@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@pixi/animate": "^2.0.2",
     "csv-parser": "^3.0.0",
     "pixi.js": "^6.4.2",
     "ws": "^8.8.0"
@@ -17,7 +18,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --open --mode=development",
-    "log_simulate" : "node log_streamer.js",
-    "log_realtime" : "node log_streamer.js --realtime"
+    "log_simulate": "node log_streamer.js",
+    "log_realtime": "node log_streamer.js --realtime"
   }
 }

@@ -21,5 +21,7 @@ export function getDashSize() {
     const scale = width/baseWidth;
     const height = 285*scale;
 
-    return {width, height, scale};
+    // return {width, height, scale};
+
+    return {width: 1024, height: 600, scale: 1}
 }
