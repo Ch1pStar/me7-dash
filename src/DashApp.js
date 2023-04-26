@@ -9,6 +9,9 @@ export default class DashApp extends Application {
 	constructor(options) {
 		super(options);
 
+		this.view.addEventListener('dblclick', ()=>this.view.requestFullscreen());
+		document.addEventListener('keyup', (e)=>e.ctrlKey&&e.key=='x'&&this.view.requestFullscreen())
+
 		Assets.loadImages()
 		.then(()=>dashAnim.shapes = Assets.shapes)
 		.then((loader)=>this._initUI())
