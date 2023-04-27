@@ -16,9 +16,12 @@ startLog();
 function startLog() {
   const isRealtime = process.argv.includes('--realtime');
   const csvParser = new CSVParser(isRealtime ? '-> Start logging' : 'Log started at');
-  const cwd = process.platform == 'win32' ? './me7logger/me7logger/' : './me7logger/me7logger_linux/'
+  const isWin32 = (process.platform == 'win32');
+  const cwd = isWin32 ? './me7logger/me7logger/' : './me7logger/me7logger_linux/'
+  const comPort = `-p ${ process.argv[3] ? process.argv[3] : isWin32 ? 'COM3' : '/dev/ttyUSB0'}`;
+  const realParams = [comPort, '-R', '-h', 'ecus/dash_log.cfg'];
   const ls = isRealtime ?
-    spawn('./bin/ME7Logger', ['-R', '-h', 'ecus/dash_log.cfg'], {cwd}) :
+    spawn('./bin/ME7Logger', realParams, {cwd}) :
     spawn('node', ['csv_log_stream_simulator.js']);
 
   ls.stdout
