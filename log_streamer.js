@@ -24,6 +24,10 @@ function startLog() {
     spawn('./bin/ME7Logger', realParams, {cwd}) :
     spawn('node', ['csv_log_stream_simulator.js']);
 
+  if(isRealtime) {
+    console.log(realParams)
+  }
+
   ls.stdout
   .on('data', (data) => {
     console.log(data.toString())
