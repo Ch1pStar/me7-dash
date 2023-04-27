@@ -25,6 +25,9 @@ function startLog() {
     spawn('node', ['csv_log_stream_simulator.js']);
 
   ls.stdout
+  .on('data', (data) => {
+    console.log(data.toString())
+  })
   .pipe(csv())
   .on('data', (data) => {
     const parsed = csvParser.parseRow(data);
