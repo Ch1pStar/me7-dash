@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VisualME7LoggerSettings CurrentProfile="Default Profile">
   <Profiles>
-    <Profile Name="Default Profile" ECUFile="D:\me 7.5 logging\me7logger\ecus\8N0906018BP.ecu" ConfigFile="D:\projects\js\me7-dash\me7logger\me7logger\configs\dash_log.cfg">
+    <Profile Name="Default Profile" ECUFile="C:\projects\misc\me7-dash\me7logger\me7logger\ecus\8N0906018BP 0002.ecu" ConfigFile="C:\projects\misc\me7-dash\me7logger\me7logger\ecus\dash_log.cfg">
       <Options WriteLogRealTime="false" TimeSync="false" WriteAbsoluteTimestamp="false" ReadSingleMeasurement="false" WriteOutputFile="false" DisableRealTimeOutput="false" TailLogFileWithVME7L="false">
-        <Communication Type="COM" COMPort="COM2" FTDIInfo="">
+        <Communication Type="COM" COMPort="COM7" FTDIInfo="">
           <BaudRate Override="false">56000</BaudRate>
         </Communication>
         <SampleRate Override="false">20</SampleRate>
