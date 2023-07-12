@@ -2,8 +2,8 @@ const { WebSocketServer } = require('ws');
 const csv = require('csv-parser');
 const { spawn } = require('child_process');
 const CSVParser = require('./CSVParser');
-
 const wss = new WebSocketServer({ port: 8085 });
+const registerCallback = require('./boost_reader');
 
 wss.on('connection', function connection(ws) {
   ws.on('message', function message(data) {
@@ -12,6 +12,10 @@ wss.on('connection', function connection(ws) {
 });
 
 startLog();
+
+let measuredBoost = 0;
+
+registerCallback((data)=>(measuredBoost=data));
 
 function startLog() {
   const isRealtime = process.argv.includes('--realtime');
@@ -22,7 +26,7 @@ function startLog() {
   const realParams = [comPort, '-R', '-h', 'ecus/dash_log.cfg'];
   const ls = isRealtime ?
     spawn('./bin/ME7Logger', realParams, {cwd}) :
-    spawn('node', ['csv_log_stream_simulator.js']);
+    spawn('node', ['backend/csv_log_stream_simulator.js']);
 
   if(isRealtime) {
     console.log(realParams)
@@ -30,13 +34,16 @@ function startLog() {
 
   ls.stdout
   .on('data', (data) => {
-    console.log(data.toString())
+    // console.log(data.toString())
   })
   .pipe(csv())
   .on('data', (data) => {
     const parsed = csvParser.parseRow(data);
 
     if(parsed) {
+      parsed[0] = measuredBoost;
+
+      // console.log(parsed[0])
       wss.clients.forEach((ws)=>{
         // console.log(parsed)
         ws.send(parsed);

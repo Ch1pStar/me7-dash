@@ -31,7 +31,8 @@ export default class DigiFizUI extends Container {
     this.rpmGauge.gotoAndStop(this._currentRpmNormalized);
 
     // tmp until we can log speed via GPS or from gearbox
-    this.speedo.text = this._currentRpmNormalized*10;
+    // this.speedo.text = this._currentRpmNormalized*10;
+    this.speedo.text = boost.toFixed(0);
   }
 
   _initUI() {
