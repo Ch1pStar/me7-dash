@@ -3,7 +3,7 @@ import { Texture } from 'pixi.js';
 const data = {
     version: 2,
     stage: null,
-    background: 0xffffff,
+    background: 0x333333,
     width: 1024,
     height: 600,
     framerate: 60,
@@ -34,6 +34,7 @@ const data = {
         }
 
         return Texture.from(id);
+        return atlas ? atlas.textures[id] : null;
     },
     setup: function (animate) {
         const MovieClip = animate.MovieClip;
@@ -43,13 +44,36 @@ const data = {
         const Graphics = animate.Graphics;
 
 
+        data.lib.arrow = class extends Container {
+            constructor() {
+                super();
+                const instance1 = new Graphics()
+                    .drawCommands(data.shapes.dash[1]);
+                this.addChild(instance1);
+            }
+        };
+
+        data.lib.round_gauge = class extends Container {
+            constructor() {
+                super();
+                const instance3 = new Graphics()
+                    .drawCommands(data.shapes.dash[2]);
+                const instance2 = new data.lib.arrow()
+                    .setTransform(99.2, 14.35);
+                this[instance2.name = "arrow"] = instance2;
+                const instance1 = new Graphics()
+                    .drawCommands(data.shapes.dash[0]);
+                this.addChild(instance3, instance2, instance1);
+            }
+        };
+
         data.lib.horizGauge = class extends MovieClip {
             constructor() {
                 super({
                     duration: 100
                 });
                 const instance1 = new Graphics()
-                    .drawCommands(data.shapes.dash[0])
+                    .drawCommands(data.shapes.dash[3])
                     .setRenderable(false);
                 const instance3 = new Sprite(data.getTexture("horiz_gauge_bg"));
                 const instance2 = new Sprite(data.getTexture("horiz_gauge_progress"))
@@ -512,7 +536,7 @@ const data = {
                     duration: 70
                 });
                 const instance1 = new Graphics()
-                    .drawCommands(data.shapes.dash[0])
+                    .drawCommands(data.shapes.dash[3])
                     .setRenderable(false);
                 const instance4 = new Sprite(data.getTexture("rpm_label"))
                     .setTransform(32, 182, 1.389, 1.389);
@@ -772,29 +796,32 @@ const data = {
                     duration: 1,
                     framerate: 60
                 });
-                const instance8 = new Sprite(data.getTexture("dash_bg"))
+                const instance9 = new Sprite(data.getTexture("dash_bg"))
                     .setTransform(0, 0, 1.367, 1.367);
-                const instance7 = new Sprite(data.getTexture("dash_logo"))
+                const instance8 = new Sprite(data.getTexture("dash_logo"))
                     .setTransform(30, 28, 1.848, 1.848);
-                const instance6 = new data.lib.speedo()
+                const instance7 = new data.lib.speedo()
                     .setTransform(451, 135);
-                this[instance6.name = "speedo"] = instance6;
-                const instance5 = new data.lib.rpmGauge()
+                this[instance7.name = "speedo"] = instance7;
+                const instance6 = new data.lib.rpmGauge()
                     .setTransform(163, 41);
-                this[instance5.name = "rpmGauge"] = instance5;
-                const instance4 = new data.lib.tempGauge()
+                this[instance6.name = "rpmGauge"] = instance6;
+                const instance5 = new data.lib.tempGauge()
                     .setTransform(797, 96);
-                this[instance4.name = "waterTempGauge"] = instance4;
-                const instance3 = new data.lib.voltageGauge()
+                this[instance5.name = "waterTempGauge"] = instance5;
+                const instance4 = new data.lib.voltageGauge()
                     .setTransform(912, 96);
-                this[instance3.name = "voltageGauge"] = instance3;
-                const instance2 = new data.lib.boostGauge()
+                this[instance4.name = "voltageGauge"] = instance4;
+                const instance3 = new data.lib.boostGauge()
                     .setTransform(873, 96);
-                this[instance2.name = "boostGauge"] = instance2;
-                const instance1 = new data.lib.throttleGauge()
+                this[instance3.name = "boostGauge"] = instance3;
+                const instance2 = new data.lib.throttleGauge()
                     .setTransform(838, 96);
-                this[instance1.name = "throttleGauge"] = instance1;
-                this.addChild(instance8, instance7, instance6, instance5, instance4, instance3, instance2, instance1);
+                this[instance2.name = "throttleGauge"] = instance2;
+                const instance1 = new data.lib.round_gauge()
+                    .setTransform(412, 394.65);
+                this[instance1.name = "boostGaugeRound"] = instance1;
+                this.addChild(instance9, instance8, instance7, instance6, instance5, instance4, instance3, instance2, instance1);
             }
         };
         data.stage = data.lib.dash;

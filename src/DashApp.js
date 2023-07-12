@@ -16,6 +16,8 @@ export default class DashApp extends Application {
 		.then(()=>dashAnim.shapes = Assets.shapes)
 		.then((loader)=>this._initUI())
 		.then(()=>this._connectToLogServer())
+
+		globalThis.__PIXI_APP__ = this;
 	}
 
 	_initUI() {
