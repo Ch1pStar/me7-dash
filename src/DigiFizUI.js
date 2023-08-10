@@ -20,7 +20,7 @@ export default class DigiFizUI extends Container {
     this._initUI();
   }
 
-  updateData([boost,rpm,waterTemp,voltage, accelPedalPos], delta) {
+  updateData([rpm, voltage, accelPedalPos, boost, waterTemp], delta) {
 
     this._currentRpmNormalized = lerp(this._currentRpmNormalized, rpm, delta)/100|0;
 

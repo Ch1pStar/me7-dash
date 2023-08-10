@@ -1,10 +1,7 @@
 {
   "dependencies": {
     "@pixi/animate": "^2.0.2",
-    "csv-parser": "^3.0.0",
-    "pixi.js": "^6.4.2",
-    "serialport": "^11.0.0",
-    "ws": "^8.8.0"
+    "pixi.js": "^6.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
