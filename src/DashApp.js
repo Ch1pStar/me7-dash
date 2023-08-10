@@ -40,6 +40,7 @@ export default class DashApp extends Application {
 
 		ws.addEventListener('message', (msg)=>{
 			this.engineData = new Float32Array(msg.data);
+			// console.log(this.engineData);
 		});
 
 	}
