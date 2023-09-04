@@ -13,15 +13,10 @@ export function scaleNumber(OldValue, OldMin, OldMax, NewMin, NewMax) {
 	return (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
 }
 
-export function getDashSize() {
-    const baseWidth = 749;
-    const baseHeight = 285;
-
+export function getDashSize({baseWidth}) {
     const width = window.innerWidth;
+    const height = window.innerHeight;
     const scale = width/baseWidth;
-    const height = 285*scale;
 
-    // return {width, height, scale};
-
-    return {width: 1024, height: 600, scale: 1}
+    return {width, height, scale};
 }

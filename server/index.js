@@ -1,6 +1,8 @@
 import { KWP2000 } from 'me7log';
 import { WebSocketServer } from 'ws';
 import { setTimeout as delay } from 'node:timers/promises';
+import { parseArgs } from "node:util";
+import MockDataLogger from './MockDataLogger.js'
 
 const wss = new WebSocketServer({ port: 8085 });
 
@@ -11,10 +13,23 @@ wss.on('connection', (ws) => {
 	});
 });
 
-initLogger();
+const args = parseArgs({
+  options: {
+    'use-mock-data': {
+      type: "boolean",
+      short: "n",
+    },
+  },
+  // tokens: true,
+});
 
-async function initLogger() {
-	const diag = new KWP2000({isDebug: false});
+initLogger({
+	useMockData: args.values['use-mock-data'],
+});
+
+async function initLogger({useMockData}) {
+	const diag = useMockData ? new MockDataLogger({isDebug: false}) :  new KWP2000({isDebug: false});
+
 
 	await diag.init();
 	await diag.wakeupECU();

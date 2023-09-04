@@ -1,5 +1,4 @@
 export default {
-
 	gauges: {
 		rpm: {
 			min: 0,
@@ -7,7 +6,7 @@ export default {
 		},
 		water: {
 			min: 0,
-			max: 120,
+			max: 160,
 		},
 		boost: {
 			min: 0,
@@ -18,8 +17,8 @@ export default {
 			max: 100,
 		},
 		voltage: {
-			min: 9,
-			max: 15,
+			min: 0,
+			max: 14,
 		},
 	}
 

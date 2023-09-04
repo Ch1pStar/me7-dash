@@ -1,30 +1,50 @@
 import { Application, Container, Sprite, Texture } from 'pixi.js';
+import * as animate from '@pixi/animate';
 import Assets from './AssetManager';
-import DigiFizUI from './DigiFizUI';
 import {getDashSize} from './utils/math';
 import dashAnim from './assets/animations/dash';
+import dashAnimPortrait from './assets/animations/PortraitDash';
+import createUI from './ui';
 
 export default class DashApp extends Application {
 
-	constructor(options) {
-		super(options);
+	constructor() {
+		super({ resizeTo: window });
 
+		this.renderer.backgroundColor = 0x1C1E1B;
 		this.view.addEventListener('dblclick', ()=>this.view.requestFullscreen());
 		document.addEventListener('keyup', (e)=>e.ctrlKey&&e.key=='x'&&this.view.requestFullscreen())
 
 		Assets.loadImages()
-		.then(()=>dashAnim.shapes = Assets.shapes)
+		.then(()=>{
+			dashAnim.shapes = Assets.shapes;
+			dashAnimPortrait.shapes = Assets.shapes;
+		})
 		.then((loader)=>this._initUI())
 		.then(()=>this._connectToLogServer())
+
+		this.renderer.on('resize', ()=>this._resizeUI())
 	}
 
 	_initUI() {
-		const ui = new DigiFizUI(dashAnim);
+		const urlParams = new URLSearchParams(window.location.search);
+		const isLandscape = Boolean(urlParams.get('landscape') !== null);
+		const animExport = isLandscape ? dashAnim : dashAnimPortrait;
 
-		ui.scale.set(getDashSize().scale);
+		animExport.setup(animate);
+
+		const anim = isLandscape ? animExport.lib.dash : animExport.lib.PortraitDash;
+		const ui = createUI({anim});
+
 		this.ui = ui;
+		this.ui.baseWidth = animExport.width;
+		this._resizeUI();
 		this.stage.addChild(ui);
     	this.ticker.add((delta)=>this._updateUI(delta));
+	}
+
+	_resizeUI() {
+		this.ui.scale.set(getDashSize({baseWidth: this.ui.baseWidth}).scale);		
 	}
 
 	_updateUI(delta) {

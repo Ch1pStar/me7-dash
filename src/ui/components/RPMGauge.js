@@ -1,5 +1,5 @@
 import { Container, Sprite } from 'pixi.js';
-import { scaleNumber } from '../utils/math';
+import { scaleNumber } from '../../utils/math';
 
 export default class RPMGauge extends Container {
 

@@ -16,7 +16,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --open --mode=development",
-    "log_simulate": "node backend/log_streamer.js",
-    "log_realtime": "node backend/log_streamer.js --realtime"
+    "log_simulate": "node server/index.js --use-mock-data",
+    "log_realtime": "node server/index.js"
   }
 }

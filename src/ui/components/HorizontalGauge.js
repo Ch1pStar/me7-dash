@@ -1,5 +1,5 @@
 import { Container, Sprite, TilingSprite, Texture } from 'pixi.js';
-import {scaleNumber} from '../utils/math';
+import {scaleNumber} from '../../utils/math';
 
 export default class HorizontalGauge extends Container {
 

@@ -1,21 +1,19 @@
 import { Container, Sprite } from 'pixi.js';
 import * as animate from '@pixi/animate';
 
-import { lerp, scaleNumber } from './utils/math';
-import dashAnim from './assets/animations/dash';
-import HorizontalGauge from './UIComponents/HorizontalGauge';
-import SpeedGauge from './UIComponents/SpeedGauge';
-import RPMGauge from './UIComponents/RPMGauge';
+import { lerp, scaleNumber } from '../utils/math';
+import HorizontalGauge from './components/HorizontalGauge';
+import SpeedGauge from './components/SpeedGauge';
+import RPMGauge from './components/RPMGauge';
 
-import Config from './config';
+import Config from '../config';
 
 
 export default class DigiFizUI extends Container {
-  constructor(anim) {
+  constructor({anim}) {
     super();
 
-    anim.setup(animate);
-    this._anim = new anim.lib.dash;
+    this._anim = new anim;
 
     this._initUI();
   }
