@@ -1,10 +1,18 @@
 const webpack = require("webpack");
 const path = require("path");
+const fs = require('node:fs');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: 'production',
   devtool: "eval-source-map",
+  devServer: {
+    https: {
+      key: fs.readFileSync('server/cert/key.pem'),
+      cert: fs.readFileSync('server/cert/cert.pem'),
+      // ca: fs.readFileSync('server/cert/ca.pem'),
+    },
+  },
   module: {
     rules: [
       {

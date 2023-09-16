@@ -16,7 +16,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --open --mode=development",
-    "log_simulate": "node server/index.js --use-mock-data",
-    "log_realtime": "node server/index.js"
+    "log_simulate": "cd server && node index.js --use-mock-data",
+    "log_realtime": "cd server && node index.js"
   }
 }

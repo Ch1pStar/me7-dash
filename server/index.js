@@ -1,15 +1,36 @@
+import { readFile } from 'node:fs/promises';
+import https from 'node:https';
 import { KWP2000 } from 'me7log';
 import { WebSocketServer } from 'ws';
 import { setTimeout as delay } from 'node:timers/promises';
 import { parseArgs } from "node:util";
 import MockDataLogger from './MockDataLogger.js'
 
-const wss = new WebSocketServer({ port: 8085 });
+const options = {
+	key: (await readFile('./cert/key.pem')),
+	cert: (await readFile('./cert/cert.pem'))
+}
+const server = new https.createServer(options).listen(8085);
+const wss = new WebSocketServer({ server });
+// const wss = new WebSocketServer({ port: 8085 });
+
+let diag;
 
 wss.on('connection', (ws) => {
 	console.log('Connected');
-	ws.on('message', (data) => {
-		console.log('received: %s', data);
+	ws.on('message', (msg) => {
+		const {command, data} = JSON.parse(msg);
+
+		switch(command) {
+		case 'readDTCs':
+			diag.readDTCs();
+
+			break;
+		case 'clearDTCs':
+			diag.clearDTCs();
+
+			break;
+		}
 	});
 });
 
@@ -28,8 +49,7 @@ initLogger({
 });
 
 async function initLogger({useMockData}) {
-	const diag = useMockData ? new MockDataLogger({isDebug: false}) :  new KWP2000({isDebug: false});
-
+	diag = useMockData ? new MockDataLogger({isDebug: false}) :  new KWP2000({isDebug: false});
 
 	await diag.init();
 	await diag.wakeupECU();

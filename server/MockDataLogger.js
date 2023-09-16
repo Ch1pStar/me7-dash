@@ -5,7 +5,7 @@ export default class MockDataLogger extends ILogger {
 
 
 	async init() {
-		this.mockData = JSON.parse((await readFile('./server/mockData.json')).toString());
+		this.mockData = JSON.parse((await readFile('./mockData.json')).toString());
 
 		this.latestData = new Float32Array(this.mockData.vars.length);
 		this._currentRow = -1;
@@ -42,4 +42,13 @@ export default class MockDataLogger extends ILogger {
 		this.latestData.forEach((val, i)=>this.latestData[i] = rowData[i]);
 		// console.log(rowData);
 	}
+
+	readDTCs() {
+		console.log('Read DTCs')
+	}
+
+	clearDTCs() {
+		console.log('Clear DTCs')
+	}
+
 }

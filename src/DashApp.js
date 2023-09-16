@@ -24,6 +24,12 @@ export default class DashApp extends Application {
 		.then(()=>this._connectToLogServer())
 
 		this.renderer.on('resize', ()=>this._resizeUI())
+
+		this._gpsSpeed = 0;
+		this._gpsConfig = {
+		  enableHighAccuracy: true,
+		  maximumAge: 1000,
+		};
 	}
 
 	_initUI() {
@@ -50,11 +56,15 @@ export default class DashApp extends Application {
 	_updateUI(delta) {
 		if(!this.engineData) return;
 
-		this.ui.updateData(this.engineData, delta);
+		navigator.geolocation.getCurrentPosition((position) => {
+			this._gpsSpeed = Number(position.coords.speed)*3.6
+		}, null, this._gpsConfig);
+
+		this.ui.updateData(this.engineData, this._gpsSpeed, delta);
 	}
 
 	_connectToLogServer() {
-		const ws = new WebSocket(`ws://${window.location.hostname}:8085`);
+		const ws = new WebSocket(`wss://${window.location.hostname}:8085`);
 
 		ws.binaryType = "arraybuffer";
 
@@ -62,6 +72,18 @@ export default class DashApp extends Application {
 			this.engineData = new Float32Array(msg.data);
 			// console.log(this.engineData);
 		});
+
+		document.addEventListener('keyup', (e)=>{
+			switch(e.key.toLowerCase()) {
+			case 'd':
+				ws.send('{ "command": "readDTCs" }');
+				break;
+			case 'c':
+				ws.send('{ "command": "clearDTCs" }');
+				break;
+			}
+
+		})
 
 	}
 
