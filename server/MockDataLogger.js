@@ -23,7 +23,7 @@ export default class MockDataLogger extends ILogger {
 		const vals = new Float32Array(this.mockData.vars.length);
 
 		while(true) {
-			vals[0] = (vals[0]+150)%7500;
+			vals[0] = (vals[0]+150)%8000;
 			vals[1] = (vals[1]+0.1)%13.8;
 			vals[2] = (vals[2]+5)%100;
 			vals[3] = (vals[3]+20)%3000;

@@ -1,10 +1,21 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, open, mkdir } from 'node:fs/promises';
+import { stdout } from 'node:process';
 import https from 'node:https';
 import { KWP2000 } from 'me7log';
 import { WebSocketServer } from 'ws';
 import { setTimeout as delay } from 'node:timers/promises';
 import { parseArgs } from "node:util";
 import MockDataLogger from './MockDataLogger.js'
+
+try { await mkdir('logs'); }catch(e) {}
+
+// const logFile = await open(`logs/log_${new Date().toLocaleString('en-GB').replace(' ', '_')}`, 'a');
+const logFile = await open(`logs/log_${Date.now()}`, 'a');
+
+stdout.write = (str) => {
+	console.error(str)
+	logFile.write(str);
+}
 
 const options = {
 	key: (await readFile('./cert/key.pem')),
