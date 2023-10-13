@@ -3,11 +3,18 @@ import { readFile } from 'node:fs/promises';
 
 export default class MockDataLogger extends ILogger {
 
+	constructor({isDebug, dataLen}) {
+		super();
+
+		this.dataSize = dataLen;
+	}
 
 	async init() {
 		this.mockData = JSON.parse((await readFile('./mockData.json')).toString());
 
-		this.latestData = new Float32Array(this.mockData.vars.length);
+		const extraVars = this.dataSize - this.mockData.vars.length;
+
+		this.latestData = new Float32Array(this.mockData.vars.length+extraVars);
 		this._currentRow = -1;
 
 		this.sweepGenerator = this.gaugeSweep();

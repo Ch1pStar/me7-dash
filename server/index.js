@@ -6,6 +6,7 @@ import { WebSocketServer } from 'ws';
 import { setTimeout as delay } from 'node:timers/promises';
 import { parseArgs } from "node:util";
 import MockDataLogger from './MockDataLogger.js'
+import PicoLogger from './PicoLogger.js';
 
 try { await mkdir('logs'); }catch(e) {}
 
@@ -60,7 +61,12 @@ initLogger({
 });
 
 async function initLogger({useMockData}) {
-	diag = useMockData ? new MockDataLogger({isDebug: false}) :  new KWP2000({isDebug: false});
+	const picoLogger = new PicoLogger();
+	diag = useMockData ? new MockDataLogger({
+		isDebug: false,
+		dataLen: 7,
+	}) :  new KWP2000({isDebug: false});
+
 
 	await diag.init();
 	await diag.wakeupECU();
@@ -71,6 +77,7 @@ async function initLogger({useMockData}) {
 	await diag.readDTCs();
 
 	const pointerAddress = await diag.readPointerLoc();
+	const loggedVarsLen = diag.mockData.vars.length;
 
 	// console.log(pointerAddress)
 
@@ -88,8 +95,12 @@ async function initLogger({useMockData}) {
 		diag.parseLoggedData();
 		// console.timeEnd('read vars');
 
+		// console.log(picoLogger.sensorData)
+		for(let i=0;i<picoLogger.sensorData.length;i++) {
+			diag.latestData[loggedVarsLen+i] = picoLogger.sensorData[i];
+		}
+
 		wss.clients.forEach((ws)=>{
-			// console.log(parsed)
 			ws.send(diag.latestData);
 		});
 

@@ -56,11 +56,11 @@ export default class DashApp extends Application {
 	_updateUI(delta) {
 		if(!this.engineData) return;
 
-		navigator.geolocation.getCurrentPosition((position) => {
-			this._gpsSpeed = Number(position.coords.speed)*3.6
-		}, null, this._gpsConfig);
+		// navigator.geolocation.getCurrentPosition((position) => {
+		// 	this._gpsSpeed = Number(position.coords.speed)*3.6
+		// }, null, this._gpsConfig);
 
-		this.ui.updateData(this.engineData, this._gpsSpeed, delta);
+		this.ui.updateData(this.engineData, delta);
 	}
 
 	_connectToLogServer() {
@@ -70,7 +70,6 @@ export default class DashApp extends Application {
 
 		ws.addEventListener('message', (msg)=>{
 			this.engineData = new Float32Array(msg.data);
-			// console.log(this.engineData);
 		});
 
 		document.addEventListener('keyup', (e)=>{

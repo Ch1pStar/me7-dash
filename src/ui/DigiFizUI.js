@@ -18,7 +18,7 @@ export default class DigiFizUI extends Container {
     this._initUI();
   }
 
-  updateData([rpm, voltage, accelPedalPos, boost, waterTemp], gpsSpeed, delta) {
+  updateData([rpm, voltage, accelPedalPos, boost, waterTemp, gpsSpeed], delta) {
     this._currentRpmNormalized = lerp(this._currentRpmNormalized, rpm, 1)/100|0;
 
     this.throttleGauge.gotoAndStop(this._getNormalizedVal(accelPedalPos, 'throttle'));
@@ -27,10 +27,7 @@ export default class DigiFizUI extends Container {
     this.voltageGauge.gotoAndStop(this._getNormalizedVal(voltage, 'voltage'));
     this.rpmGauge.gotoAndStop(this._currentRpmNormalized);
 
-    // tmp until we can log speed via GPS or from gearbox
-    // this.speedo.text = this._currentRpmNormalized*10;
-    // this.speedo.text = boost.toFixed(0);
-    this.speedo.text = gpsSpeed.toFixed(0);
+    this.speedo.text = (gpsSpeed/1000).toFixed(0);
 
     if(this.rpmNum) this.rpmNum.val.text = rpm;
     if(this.tempNum) this.tempNum.val.text = waterTemp;
